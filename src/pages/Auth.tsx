@@ -36,9 +36,10 @@ const Auth = () => {
         });
         if (error) throw error;
         toast({
-          title: "Check your email",
-          description: "We sent you a verification link. Please verify your email before logging in.",
+          title: "Account created!",
+          description: "You are now signed in.",
         });
+        navigate("/");
       }
     } catch (err: any) {
       toast({ title: "Error", description: err.message, variant: "destructive" });

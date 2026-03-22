@@ -1,4 +1,4 @@
-import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 import { CATEGORIES, AREAS, type SpotCategory, type MumbaiArea } from "@/data/hangoutSpots";
 
 interface BudgetFilterProps {
@@ -12,29 +12,46 @@ interface BudgetFilterProps {
 }
 
 const BudgetFilter = ({ minBudget, maxBudget, onBudgetChange, category, onCategoryChange, area, onAreaChange }: BudgetFilterProps) => {
+  const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Math.max(0, Number(e.target.value) || 0);
+    onBudgetChange(Math.min(val, maxBudget), maxBudget);
+  };
+
+  const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = Math.max(0, Number(e.target.value) || 0);
+    onBudgetChange(minBudget, Math.max(val, minBudget));
+  };
+
   return (
     <div className="animate-fade-up stagger-3 mx-auto max-w-2xl px-4">
       <div className="rounded-2xl border bg-card p-6 shadow-sm space-y-6">
-        {/* Budget range slider */}
+        {/* Budget range inputs */}
         <div>
-          <div className="mb-3 flex items-baseline justify-between">
-            <label className="text-sm font-medium text-foreground">Budget Range</label>
-            <span className="text-lg font-bold text-primary tabular-nums">
-              {minBudget === 0 ? "Free" : `₹${minBudget}`} — ₹{maxBudget}
-              <span className="text-sm font-normal text-muted-foreground">/person</span>
-            </span>
-          </div>
-          <Slider
-            value={[minBudget, maxBudget]}
-            onValueChange={([min, max]) => onBudgetChange(min, max)}
-            min={0}
-            max={500}
-            step={10}
-            className="py-2"
-          />
-          <div className="mt-1 flex justify-between text-xs text-muted-foreground">
-            <span>Free</span>
-            <span>₹500</span>
+          <label className="mb-3 block text-sm font-medium text-foreground">Budget Range (₹ per person)</label>
+          <div className="flex items-center gap-3">
+            <div className="flex-1">
+              <label className="mb-1 block text-xs text-muted-foreground">Min ₹</label>
+              <Input
+                type="number"
+                min={0}
+                value={minBudget}
+                onChange={handleMinChange}
+                placeholder="0"
+                className="tabular-nums"
+              />
+            </div>
+            <span className="mt-5 text-muted-foreground font-medium">—</span>
+            <div className="flex-1">
+              <label className="mb-1 block text-xs text-muted-foreground">Max ₹</label>
+              <Input
+                type="number"
+                min={0}
+                value={maxBudget}
+                onChange={handleMaxChange}
+                placeholder="500"
+                className="tabular-nums"
+              />
+            </div>
           </div>
         </div>
 
