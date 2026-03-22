@@ -21,7 +21,7 @@ const HeroSection = () => {
         </h1>
 
         <p className="animate-fade-up stagger-2 mx-auto mt-6 max-w-xl text-lg text-muted-foreground" style={{ textWrap: "pretty" }}>
-          Set your budget, pick a vibe, and discover affordable cafés, parks, restaurants & malls near campus — no more scrolling through overpriced options.
+          Set your budget, pick a vibe, and discover affordable cafés, parks, restaurants & malls near campus - no more scrolling through overpriced options.
         </p>
       </div>
     </section>
