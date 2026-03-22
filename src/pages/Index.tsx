@@ -3,31 +3,39 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import BudgetFilter from "@/components/BudgetFilter";
 import SpotGrid from "@/components/SpotGrid";
-import { hangoutSpots, type SpotCategory } from "@/data/hangoutSpots";
+import AIChatButton from "@/components/AIChatButton";
+import { hangoutSpots, type SpotCategory, type MumbaiArea } from "@/data/hangoutSpots";
 
 const Index = () => {
-  const [budget, setBudget] = useState(300);
+  const [minBudget, setMinBudget] = useState(0);
+  const [maxBudget, setMaxBudget] = useState(500);
   const [category, setCategory] = useState<SpotCategory | "all">("all");
+  const [area, setArea] = useState<MumbaiArea | "all">("all");
 
   const filtered = useMemo(() => {
     return hangoutSpots.filter((spot) => {
-      const withinBudget = spot.priceRange <= budget;
+      const withinBudget = spot.priceRange >= minBudget && spot.priceRange <= maxBudget;
       const matchesCategory = category === "all" || spot.category === category;
-      return withinBudget && matchesCategory;
+      const matchesArea = area === "all" || spot.area === area;
+      return withinBudget && matchesCategory && matchesArea;
     });
-  }, [budget, category]);
+  }, [minBudget, maxBudget, category, area]);
 
   return (
     <div className="min-h-screen pb-16">
       <Navbar />
       <HeroSection />
       <BudgetFilter
-        budget={budget}
-        onBudgetChange={setBudget}
+        minBudget={minBudget}
+        maxBudget={maxBudget}
+        onBudgetChange={(min, max) => { setMinBudget(min); setMaxBudget(max); }}
         category={category}
         onCategoryChange={setCategory}
+        area={area}
+        onAreaChange={setArea}
       />
       <SpotGrid spots={filtered} />
+      <AIChatButton />
     </div>
   );
 };

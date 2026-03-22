@@ -52,6 +52,8 @@ export default {
           park: "hsl(var(--spot-park))",
           restaurant: "hsl(var(--spot-restaurant))",
           mall: "hsl(var(--spot-mall))",
+          fastfood: "hsl(var(--spot-fastfood))",
+          other: "hsl(var(--spot-other))",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
